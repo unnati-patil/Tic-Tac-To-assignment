@@ -1,0 +1,114 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    
+    <script type="text/javascript">
+      
+      cell_value = new Array();
+      cell_contains = new Array();
+      var  winners = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+      var step = 0;
+      var canvas;
+      var canvas_element;
+      var rendering_context;
+      var total_cells_filled = 0;
+      var confirmation_flag;
+      
+      window.onload=function()
+      {    
+      for(var i=0;i<=8;i++)
+    		      {
+		      cell_contains[i]='';
+		      cell_value[i] = false;
+		      }
+		      }
+		      
+		      function canvasClicked(canvasNumber)
+		      {
+		      canvas_element = document.getElementById(canvasNumber);
+		      rendering_context = canvas_element.getContext("2d");
+		      
+		      if(cell_value[canvasNumber-1] ==false)
+		      {
+		      if(step%2==0)
+		      {
+		      rendering_context.fillStyle="#FF0000";
+		      rendering_context.fillRect(0,0,1000,1000);
+	         rendering_context.beginPath();
+	         rendering_context.moveTo(25,25);
+	         rendering_context.lineTo(60,60);
+		      rendering_context.moveTo(60,25);
+		      rendering_context.lineTo(25,60);
+		      rendering_context.stroke();
+		      rendering_context.closePath();
+		      cell_contains[canvasNumber-1] = 'X';
+		      }
+		      else
+		      {
+	              rendering_context.fillStyle="#00FF00";
+		      rendering_context.fillRect(0,0,1000,1000);
+		      rendering_context.beginPath();
+		      rendering_context.arc(40,45,25,0,Math.PI*2,true);
+		      rendering_context.stroke();
+		      rendering_context.closePath();
+		      cell_contains[canvasNumber-1] = 'O';
+		      }
+		      
+		      step++;
+		      cell_value[canvasNumber-1] = true;
+		      total_cells_filled++;
+		      isWinner(cell_contains[canvasNumber-1]);
+		      
+		      if(total_cells_filled==9)
+		      {
+		      alert("THE GAME IS OVER! Draw !!!");
+		      location.reload(true);
+		      }
+		      }
+		      else
+		      {
+		      alert("THAT SPACE IS ALREADY OCCUPIED ");
+		      }
+		      
+		      }
+		      
+		      function isWinner(symbol)
+		      {
+		      for(var a = 0; a < winners.length; a++)
+					 {
+					 if(cell_contains[winners[a][0]]==symbol&&cell_contains[winners[a][1]]== symbol&&cell_contains[winners[a][2]]==symbol)
+					 {
+					 alert(symbol+ " WON!");
+					 newGame();
+					 }
+  					 }
+					 
+					 }
+					 
+					 function newGame()
+					 {
+					 confirmation_flag=confirm("PLAY AGAIN?");
+					 if(confirmation_flag==true)
+					 {
+					 location.reload(true);
+					 }
+					 
+					 }
+					 
+					 </script>
+  </head>
+  <body>
+    <div id ="box">
+      <h4>Lates Start </h4><h1> Tic - Tac - Toe!</h1>
+      <canvas id = "1"  width="100" height="100" style="border:1px solid black" onclick="canvasClicked(1)"></canvas>
+      <canvas id = "2"  width="100" height="100" style="border:1px solid black" onclick="canvasClicked(2)"></canvas>
+      <canvas id = "3"  width="100" height="100" style="border:1px solid black" onclick="canvasClicked(3)"></canvas><br/>
+      <canvas id = "4"  width="100" height="100" style="border:1px solid black" onclick="canvasClicked(4)"></canvas>
+      <canvas id = "5"  width="100" height="100" style="border:1px solid black" onclick="canvasClicked(5)"></canvas>
+      <canvas id = "6"  width="100" height="100" style="border:1px solid black" onclick="canvasClicked(6)"></canvas><br/>
+      <canvas id = "7"  width="100" height="100" style="border:1px solid black" onclick="canvasClicked(7)"></canvas>
+      <canvas id = "8"  width="100" height="100" style="border:1px solid black" onclick="canvasClicked(8)"></canvas>
+      <canvas id = "9"  width="100" height="100" style="border:1px solid black" onclick="canvasClicked(9)"></canvas>
+    </div>
+  </body>
+</html>
